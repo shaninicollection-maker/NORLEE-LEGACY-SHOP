@@ -1,0 +1,13 @@
+{
+  "name": "orlee-legacy-shop",
+  "version": "1.0.0",
+  "description": "API Otentikasi OTP",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemailer": "^6.9.1"
+  }
+}
