@@ -8,15 +8,20 @@ app.use(bodyParser.json());
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'anda@gmail.com',
-    pass: 'nqzmldpjubfnksvu'
+    user: process.env.SMTP_USER || 'anda@gmail.com',
+    pass: process.env.SMTP_PASS || 'nqzmldpjubfnksvu'
   }
+});
+
+// Laluan Health Check untuk Fly.io (Penting untuk elak ralat)
+app.get('/', (req, res) => {
+  res.status(200).send('API Pelayan Norlee Legacy Aktif!');
 });
 
 app.post('/send-otp', async (req, res) => {
   const { email, otp } = req.body;
   const mailOptions = {
-    from: 'anda@gmail.com',
+    from: process.env.SMTP_USER || 'anda@gmail.com',
     to: email,
     subject: 'Kod Pengesahan OTP Anda',
     text: `Kod OTP anda ialah: ${otp}`
@@ -31,7 +36,7 @@ app.post('/send-otp', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Pelayan sedang berjalan di port ${PORT}`);
 });
